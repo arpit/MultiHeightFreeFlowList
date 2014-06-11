@@ -90,9 +90,10 @@ public class FFActivity extends Activity {
 
 				p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
 				p.setTextSize(42);
+			
 				
 				StaticLayout sl = new StaticLayout(strings[i], p, width ,
-						Layout.Alignment.ALIGN_NORMAL, 1.0f, 1.0f, false);
+						Layout.Alignment.ALIGN_NORMAL, 1.0f, 1.0f, true);
 				heights[i] = sl.getHeight();
 			}
 		}
@@ -219,7 +220,7 @@ public class FFActivity extends Activity {
 			tv.setText(strings[position]);
 
 			tv.setFocusable(false);
-			tv.setBackgroundColor(0xffff00ff);
+			tv.setBackgroundColor(0xffcfcfcf);
 			
 
 			return tv;
