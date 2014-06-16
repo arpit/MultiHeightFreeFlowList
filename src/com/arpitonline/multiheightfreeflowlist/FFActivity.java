@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.comcast.freeflow.core.AbsLayoutContainer;
+import com.comcast.freeflow.core.AbsLayoutContainer.OnItemClickListener;
 import com.comcast.freeflow.core.FreeFlowContainer;
 import com.comcast.freeflow.core.FreeFlowItem;
 import com.comcast.freeflow.core.Section;
@@ -31,7 +33,7 @@ import com.comcast.freeflow.layouts.FreeFlowLayoutBase;
 import com.comcast.freeflow.layouts.VLayout;
 import com.comcast.freeflow.utils.ViewUtils;
 
-public class FFActivity extends Activity {
+public class FFActivity extends Activity implements OnItemClickListener {
 
 	private AdaptiveTextHeightLayout layout;
 
@@ -44,22 +46,25 @@ public class FFActivity extends Activity {
 
 		String[] strings = new String[] {
 				"1) A layout engine for Android that decouples layouts from the View containers that manage scrolling and view recycling. FreeFlow makes it really easy to create custom layouts and beautiful transition animations as layouts are changed.",
-				"2) FreeFlow is a composition based approach to Android Layouts. As opposed to default Android Layouts, FreeFlow Layouts are swappable at runtime which allows views to their new states smoothly. The fundamental difference here is that FreeFlow prefers Composition over Inheritance which makes the system a lot more adaptable.",
+				/*""2) FreeFlow is a composition based approach to Android Layouts. As opposed to default Android Layouts, FreeFlow Layouts are swappable at runtime which allows views to their new states smoothly. The fundamental difference here is that FreeFlow prefers Composition over Inheritance which makes the system a lot more adaptable.",
 				"3) Freeflow may be considered in 'alpha'. You can help in many ways, by reviewing and making suggestions on api's to actually finding bugs and submitting patches via pull requests.",
 				"4) A layout engine for Android that decouples layouts from the View containers that manage scrolling and view recycling. FreeFlow makes it really easy to create custom layouts and beautiful transition animations as layouts are changed.",
+				
 				"5) FreeFlow is a composition based approach to Android Layouts. As opposed to default Android Layouts, FreeFlow Layouts are swappable at runtime which allows views to their new states smoothly. The fundamental difference here is that FreeFlow prefers Composition over Inheritance which makes the system a lot more adaptable.",
 				"6) Freeflow may be considered in 'alpha'. You can help in many ways, by reviewing and making suggestions on api's to actually finding bugs and submitting patches via pull requests.",
 				"7) A layout engine for Android that decouples layouts from the View containers that manage scrolling and view recycling. FreeFlow makes it really easy to create custom layouts and beautiful transition animations as layouts are changed.",
-				"8) FreeFlow is a composition based approach to Android Layouts. As opposed to default Android Layouts, FreeFlow Layouts are swappable at runtime which allows views to their new states smoothly. The fundamental difference here is that FreeFlow prefers Composition over Inheritance which makes the system a lot more adaptable.",
+				8) FreeFlow is a composition based approach to Android Layouts. As opposed to default Android Layouts, FreeFlow Layouts are swappable at runtime which allows views to their new states smoothly. The fundamental difference here is that FreeFlow prefers Composition over Inheritance which makes the system a lot more adaptable.",
 				"9) Freeflow may be considered in 'alpha'. You can help in many ways, by reviewing and making suggestions on api's to actually finding bugs and submitting patches via pull requests.",
 				"10) A layout engine for Android that decouples layouts from the View containers that manage scrolling and view recycling. FreeFlow makes it really easy to create custom layouts and beautiful transition animations as layouts are changed.",
 				"11) FreeFlow is a composition based approach to Android Layouts. As opposed to default Android Layouts, FreeFlow Layouts are swappable at runtime which allows views to their new states smoothly. The fundamental difference here is that FreeFlow prefers Composition over Inheritance which makes the system a lot more adaptable.",
-				"12) Freeflow may be considered in 'alpha'. You can help in many ways, by reviewing and making suggestions on api's to actually finding bugs and submitting patches via pull requests."
+				"12) Freeflow may be considered in 'alpha'. You can help in many ways, by reviewing and making suggestions on api's to actually finding bugs and submitting patches via pull requests." */
 
 		};
 
 		layout = new AdaptiveTextHeightLayout();
 		layout.initWithStrings(strings);
+		
+		container.setOnItemClickListener(this);
 
 		
 		container.setLayout(layout);
@@ -88,16 +93,15 @@ public class FFActivity extends Activity {
 			for (int i = 0; i < strings.length; i++) {
 				TextPaint p = new TextPaint();
 
-				p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+				p.setTypeface(Typeface
+						.create(Typeface.DEFAULT, Typeface.NORMAL));
 				p.setTextSize(42);
-			
-				
-				StaticLayout sl = new StaticLayout(strings[i], p, width ,
+
+				StaticLayout sl = new StaticLayout(strings[i], p, width,
 						Layout.Alignment.ALIGN_NORMAL, 1.0f, 1.0f, true);
 				heights[i] = sl.getHeight();
 			}
 		}
-
 
 		@Override
 		public Map<Object, FreeFlowItem> getItemProxies(int viewPortLeft,
@@ -121,7 +125,7 @@ public class FFActivity extends Activity {
 
 		@Override
 		public void setLayoutParams(FreeFlowLayoutParams params) {
-			// 
+			//
 		}
 
 		@Override
@@ -188,8 +192,9 @@ public class FFActivity extends Activity {
 		private ArrayList<Section> sections = new ArrayList<Section>();
 
 		private String[] strings;
+
 		public DataAdapter(String[] strings) {
-			
+
 			this.strings = strings;
 			Section s = new Section();
 
@@ -210,7 +215,7 @@ public class FFActivity extends Activity {
 		public View getItemView(int section, int position, View convertView,
 				ViewGroup parent) {
 			TextView tv = null;
-			
+
 			if (convertView != null) {
 				// Log.d(TAG, "Convert view not null");
 				tv = (TextView) convertView;
@@ -221,7 +226,6 @@ public class FFActivity extends Activity {
 
 			tv.setFocusable(false);
 			tv.setBackgroundColor(0xffcfcfcf);
-			
 
 			return tv;
 		}
@@ -273,6 +277,12 @@ public class FFActivity extends Activity {
 			return true;
 		}
 
+	}
+
+	@Override
+	public void onItemClick(AbsLayoutContainer parent, FreeFlowItem proxy) {
+		Log.d("debug", "onItemClick: " + proxy.itemSection + " / "
+				+ proxy.itemIndex);
 	}
 
 }
